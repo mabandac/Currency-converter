@@ -1,1 +1,28 @@
-<h1>Currency Converter</h1>
+<div>
+    <h1>Currency Converter</h1>
+    <div>
+      <span>Source Currency:</span>
+      <select>
+        @for (sourceCurrency of currencyData; track sourceCurrency) {
+          <option [id]="'source-' + sourceCurrency.symbol">
+            {{ sourceCurrency.name }}
+          </option>
+        }
+      </select>
+    </div>
+    <div>
+      <span for="amount">Amount:</span>
+      <input type="number">
+    </div>
+    <div>
+      <span>Destination Currency:</span>
+      <select >
+        @for (destinationCurrency of currencyData; track destinationCurrency) {
+          <option [id]="'destination' + destinationCurrency">
+            {{ destinationCurrency.name }}
+          </option>
+        }
+      </select>
+    </div>
+    <button >Convert </button>
+</div>
