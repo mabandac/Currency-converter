@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CurrencyService } from './currency.service';
-import { Currency } from './models/currency.interface';
+import { Currency } from './models/currency.models';
 import { ReplaySubject, takeUntil } from 'rxjs';
 
 @Component({
@@ -12,12 +12,11 @@ export class CurrencyConverter implements OnInit {
   currencyData : Currency[] = [];
   convertedAmount: number = 0;
   conversionRate: number = 0;
-  amount: number = 0;
+  amount: number | null = null;
   source: string = '';
   destination: string = '';
 
  private destroyed$ = new ReplaySubject<void>();
-
 
   constructor(
     private currencyService : CurrencyService
@@ -27,12 +26,7 @@ export class CurrencyConverter implements OnInit {
     this.currencyService.getCurrency().pipe(
       takeUntil(this.destroyed$)
     ).subscribe((data) => {
-      if (data.success) {
-        this.currencyData = Object.keys(data.symbols).map(key => ({
-          symbol: key,
-          name: data.symbols[key]
-        }));
-      }
+      this.currencyData = data;
     });
    }
 
