@@ -21,6 +21,6 @@
       </option>
     </select>
   </div>
-  <div class="converted-amount" *ngIf="convertedAmount">{{ amount | currency : source : 'symbol' }} = {{ convertedAmount | currency : destination : 'symbol'  }}</div>
-  <div class="conversion-rate" *ngIf="conversionRate">Rate: {{ conversionRate }}</div>
+  <div class="converted-amount" *ngIf="convertedAmount && amount !== null && amount !== 0">{{ amount | currency : source : 'symbol' }} = {{ convertedAmount | currency : destination : 'symbol'  }}</div>
+  <div class="conversion-rate" *ngIf="conversionRate && amount !== null && amount !== 0">Rate: {{ conversionRate }}</div>
 </div>
