@@ -15,4 +15,9 @@ export class CurrencyService {
     getCurrency(): Observable<any> {
       return this.http.get<any>(`${this.apiURL}symbols?access_key=${this.key}`);
     }
+
+    convertCurrency(source: string, destination: string, amount: number) {
+      const url = `${this.apiURL}convert?access_key=${this.key}&from=${source}&to=${destination}&amount=${amount}`;
+      return this.http.get<any>(url);
+    }
 }

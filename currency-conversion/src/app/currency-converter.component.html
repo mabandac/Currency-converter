@@ -1,28 +1,26 @@
 <div>
-    <h1>Currency Converter</h1>
-    <div>
-      <span>Source Currency:</span>
-      <select>
-        @for (sourceCurrency of currencyData; track sourceCurrency) {
-          <option [id]="'source-' + sourceCurrency.symbol">
-            {{ sourceCurrency.name }}
-          </option>
-        }
-      </select>
-    </div>
-    <div>
-      <span for="amount">Amount:</span>
-      <input type="number">
-    </div>
-    <div>
-      <span>Destination Currency:</span>
-      <select >
-        @for (destinationCurrency of currencyData; track destinationCurrency) {
-          <option [id]="'destination' + destinationCurrency">
-            {{ destinationCurrency.name }}
-          </option>
-        }
-      </select>
-    </div>
-    <button >Convert </button>
+  <h1>Currency Converter</h1>
+  <div>
+    <span>Source Currency:</span>
+    <select id="source-currencies" [(ngModel)]="source">
+      <option *ngFor="let sourceCurrency of currencyData" [value]="sourceCurrency.symbol">
+        {{ sourceCurrency.name }}
+      </option>
+    </select>
+  </div>
+  <div>
+    <span for="amount">Amount:</span>
+    <input type="number" [(ngModel)]="amount" id="amount">
+  </div>
+  <div>
+    <span>Destination Currency:</span>
+    <select id="destination-currencies" [(ngModel)]="destination">
+      <option *ngFor="let destinationCurrency of currencyData" [value]="destinationCurrency.symbol">
+        {{ destinationCurrency.name }}
+      </option>
+    </select>
+  </div>
+  <div *ngIf="convertedAmount">Result: {{amount | currency : source }} = {{convertedAmount | currency : destination}} </div>
+  <div *ngIf="conversionRate">Rate: {{ conversionRate }}</div>
+  <button [disabled]="!(source && amount && destination)" (click)="convert()">Convert</button>
 </div>
