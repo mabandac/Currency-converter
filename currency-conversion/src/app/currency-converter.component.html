@@ -10,8 +10,8 @@
       </option>
     </select>
 
-    <span class="label" for="amount">Amount:</span>
-    <input  type="number" [(ngModel)]="amount" id="amount" (input)="convert()">
+    <span class="label">Amount:</span>
+    <input type="number" [(ngModel)]="amount" id="amount" (input)="convert()" placeholder="Enter the amount you want to convert">
 
     <span class="label">Destination: </span>
     <select id="destination-currencies" [(ngModel)]="destination" (change)="convert()">
