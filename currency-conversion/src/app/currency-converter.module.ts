@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CurrencyConverter } from './currency-converter.component';
-import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
