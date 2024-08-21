@@ -8,35 +8,34 @@ import { ConversionResponse, Currency, CurrencySymbolsResponse } from './models/
   providedIn: 'root'
 })
 export class CurrencyService {
-  private apiURL = 'http://data.fixer.io/api/';
-  private key = environment.accessKey;
+  private key = environment.apiKey;
+  private apiURL = 'https://v6.exchangerate-api.com/v6/' + this.key;
 
   constructor(private http: HttpClient) {}
 
   getCurrency(): Observable<Currency[]> {
-    return this.http.get<CurrencySymbolsResponse>(`${this.apiURL}symbols?access_key=${this.key}`).pipe(
+    return this.http.get<CurrencySymbolsResponse>(`${this.apiURL}/codes`).pipe(
       map(response => {
-      if (response.success) {
-        return Object.keys(response.symbols).map(key => ({
-          symbol: key,
-          name: response.symbols[key]
+      if (response.result === 'success' && Array.isArray(response.supported_codes)) {
+        return response.supported_codes.map(([symbol, name]) => ({
+          symbol,
+          name
         }));
       } else {
         throw new Error('Failed to load currency symbols');
       }
     }),
     catchError(error => {
-      console.error('Error loading currency symbols:', error);
       return throwError(() => new Error('Error loading currency symbols'));
     })
   );
   }
 
   convertCurrency(source: string, destination: string, amount: number) {
-    const url = `${this.apiURL}convert?access_key=${this.key}&from=${source}&to=${destination}&amount=${amount}`;
+    const url = `${this.apiURL}/pair/${source}/${destination}/${amount}`;
     return this.http.get<ConversionResponse>(url).pipe(
       map(response => {
-        if (response.success) {
+        if (response.result) {
           return response;
         } else {
           throw new Error('Failed to convert currency');

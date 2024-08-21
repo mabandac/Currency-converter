@@ -48,18 +48,11 @@ describe('CurrencyConverter', () => {
 
   it('should convert currency from component', () => {
     const mockConversionResponse = {
-        success: true,
-        query: {
-            from: 'USD',
-            to: 'GBP',
-            amount: 2500
-        },
-        info: {
-            timestamp: 1720071304,
-            rate: 0.78465
-        },
-        date: "2024-07-04",
-        result: 1961.625
+      result: 'success',
+      conversion_rate: 0.76776570,
+      conversion_result: 1919.41,
+      base_code: 'USD',
+      target_code: 'GBP'
 
     };
 
@@ -71,8 +64,8 @@ describe('CurrencyConverter', () => {
     component.convert();
 
     expect(currencyService.convertCurrency).toHaveBeenCalledWith('USD', 'GBP', 2500);
-    expect(component.convertedAmount).toBe(1961.625);
-    expect(component.conversionRate).toBe(0.78465);
+    expect(component.convertedAmount).toBe(1919.41);
+    expect(component.conversionRate).toBe(0.76776570);
   });
 
 

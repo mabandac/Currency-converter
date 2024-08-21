@@ -2,7 +2,7 @@
   <img draggable="false" src="https://cdn.coda.io/icons/svg/color/currency-exchange.svg">
   <h1 class="title">Currency Converter</h1>
   <div class="exchange">
-    <span class="label">Source: </span>
+    <label for="source-currencies">Source:</label>
     <select id="source-currencies" [(ngModel)]="source" (change)="convert()">
       <option value="" disabled selected>Select your source currency</option>
       <option *ngFor="let sourceCurrency of currencyData" [value]="sourceCurrency.symbol">
@@ -10,16 +10,15 @@
       </option>
     </select>
 
-    <span class="label">Amount:</span>
-    <input type="number" [(ngModel)]="amount" id="amount" (input)="convert()" placeholder="Enter the amount you want to convert">
-
-    <span class="label">Destination: </span>
+    <label for="destination-currencies">Destination:</label>
     <select id="destination-currencies" [(ngModel)]="destination" (change)="convert()">
       <option value="" disabled selected>Select your destination currency</option>
       <option *ngFor="let destinationCurrency of currencyData" [value]="destinationCurrency.symbol">
         {{ destinationCurrency.name }}
       </option>
     </select>
+    <label>Amount:</label>
+    <input type="number" [(ngModel)]="amount" id="amount" (input)="onAmountChange()" placeholder="Enter the amount" [disabled]="!source || !destination">
   </div>
   <div class="converted-amount" *ngIf="convertedAmount && amount !== null && amount !== 0">{{ amount | currency : source : 'symbol' }} = {{ convertedAmount | currency : destination : 'symbol'  }}</div>
   <div class="conversion-rate" *ngIf="conversionRate && amount !== null && amount !== 0">Rate: {{ conversionRate }}</div>

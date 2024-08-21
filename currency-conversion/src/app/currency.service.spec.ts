@@ -33,7 +33,7 @@ describe('CurrencyConverterComponent', () => {
 
   it('should get currency data on init', () => {
     const mockCurrencyData: Currency[] = [
-      { symbol: 'AED', name: 'United Arab Emirates Dirham' },
+      { symbol: 'AED', name: 'UAE Dirham' },
       { symbol: 'AFN', name: 'Afghan Afghani' },
       { symbol: 'ALL', name: 'Albanian Lek' }
     ];
@@ -47,30 +47,25 @@ describe('CurrencyConverterComponent', () => {
 
   it('should convert currency from service', () => {
     const mockConversionResponse = {
-      success: true,
-      query: {
-          from: 'GBP',
-          to: 'JPY',
-          amount: 25
-      },
-      info: {
-          timestamp: 1720068124,
-          rate: 205.82337
-      },
-      date: '2024-07-04',
-      result: 5145.58425
+
+      result: 'success',
+      conversion_rate: 447.83,
+      conversion_result: 17.91,
+      base_code: 'GBP',
+      target_code: 'ZWL'
+
     };
 
     currencyService.convertCurrency.and.returnValue(of(mockConversionResponse));
 
     component.source = 'GBP';
-    component.destination = 'JPY';
+    component.destination = 'ZWL';
     component.amount = 25;
     component.convert();
 
-    expect(currencyService.convertCurrency).toHaveBeenCalledWith('GBP', 'JPY', 25);
-    expect(component.convertedAmount).toBe(5145.58425);
-    expect(component.conversionRate).toBe(205.82337);
+    expect(currencyService.convertCurrency).toHaveBeenCalledWith('GBP', 'ZWL', 25);
+    expect(component.convertedAmount).toBe(17.91);
+    expect(component.conversionRate).toBe(447.83);
   });
 
 });
